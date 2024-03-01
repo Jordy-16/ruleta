@@ -77,7 +77,6 @@
       margin-bottom: 20px;
     }
 
-    
   </style>
 </head>
 
@@ -94,7 +93,7 @@
     <h3 id="premio" style="display: none;"></h3>
   </div>
   <script type="text/javascript">
-     const array_planes =
+    const array_planes =
       [
         'Cena romántica'
         , 'Picnic al atardecer'
@@ -151,6 +150,7 @@
     let pos_ini = 0;
     let clic = 0;
     let movement;
+
     function sortear() {
       if (clic == 0) {
         let canvas = document.getElementById("idcanvas");
@@ -159,18 +159,22 @@
           canvas.style.transform = 'rotate(' + pos_ini + 'deg)';
         }, 10);
         clic = 1;
-        document.getElementById("idestado").innerHTML = "Detener";
-      } else {
-        clearInterval(movement);
-        clic = 0;
-        document.getElementById("idestado").innerHTML = "Sortear";
-        document.getElementById("boton").style.display = "none"; // Oculta el botón
-        const seleccionadoIndex = Math.floor((pos_ini % 360) / (360 / array_planes.length));
-        const seleccionado = array_planes[array_planes.length - 1 - seleccionadoIndex];
-        const premioElement = document.getElementById("premio");
-        premioElement.textContent = `Felicidades! Tu premio es: ${seleccionado} ❤️`;
-        premioElement.style.display = "block"; // Muestra el premio ganado
+        document.getElementById("idestado").innerHTML = "Espere";
+
+        setTimeout(detenerSorteo, 6000); // 10000 milisegundos = 10 segundos
       }
+    }
+
+    function detenerSorteo() {
+      clearInterval(movement);
+      clic = 0;
+      document.getElementById("idestado").innerHTML = "Sortear";
+      document.getElementById("boton").style.display = "none"; // Oculta el botón
+      const seleccionadoIndex = Math.floor((pos_ini % 360) / (360 / array_planes.length));
+      const seleccionado = array_planes[array_planes.length - 1 - seleccionadoIndex];
+      const premioElement = document.getElementById("premio");
+      premioElement.textContent = `Felicidades! Tu premio es: ${seleccionado} ❤️`;
+      premioElement.style.display = "block"; // Muestra el premio ganado
     }
 
     function random_color() {
